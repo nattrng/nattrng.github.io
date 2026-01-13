@@ -247,11 +247,13 @@
             transition: width 0.3s ease;
         }
 
-        .contact-wrapper:hover .contact-label {
+        .contact-wrapper:hover .contact-label,
+        .contact-wrapper.active .contact-label {
             color: var(--text);
         }
 
-        .contact-wrapper:hover .contact-label::after {
+        .contact-wrapper:hover .contact-label::after,
+        .contact-wrapper.active .contact-label::after {
             width: 100%;
         }
 
@@ -290,7 +292,7 @@
             display: none;
         }
 
-        .contact-wrapper:hover .email-reveal {
+        .contact-wrapper.active .email-reveal {
             max-width: 300px;
             opacity: 1;
         }
@@ -595,6 +597,22 @@
         document.getElementById('publicationsOverlay').addEventListener('click', function(e) {
             if (e.target === this) {
                 closePublications();
+            }
+        });
+
+        // Contact email toggle on click
+        const contactWrapper = document.querySelector('.contact-wrapper');
+        const contactLabel = document.querySelector('.contact-label');
+
+        contactLabel.addEventListener('click', function(e) {
+            e.stopPropagation();
+            contactWrapper.classList.toggle('active');
+        });
+
+        // Close email reveal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!contactWrapper.contains(e.target)) {
+                contactWrapper.classList.remove('active');
             }
         });
     </script>
